@@ -43,7 +43,7 @@ route.post("/login", async (req, res) => {
         const accesstoken = jwt.sign(
           { userId: User._id, username: User.username },
           "tanuj",
-          { expiresIn: "1d" }
+          { expiresIn: "3d" }
         );
 
         // const refreshToken = jwt.sign(

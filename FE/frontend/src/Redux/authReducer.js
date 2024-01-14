@@ -17,6 +17,7 @@ const initialState = {
   user: getDataFormLocalStorage("auth")?.username || false,
   userId: getDataFormLocalStorage("auth")?.userId || "",
   isError: false,
+  accesstoken: getDataFormLocalStorage("auth")?.accesstoken ||"",
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -25,11 +26,12 @@ export const authReducer = (state = initialState, action) => {
       return { ...state, isLoading: true };
 
     case LOGIN_SUCCESS:
-      if (action.payload?.accessToken) {
+      if (action.payload?.tokens.accesstoken) {
         let User = {
           isAuth: true,
           username: action.payload.username,
           userId: action.payload.userId,
+          accesstoken: action.payload.tokens.accesstoken,
         };
         setDataToLocalStorage("auth", User);
         return {
@@ -47,16 +49,10 @@ export const authReducer = (state = initialState, action) => {
       return { ...state, isLoading: false, isError: true };
     }
     case LOGOUT_SUCCESS: {
+
       deleteDataFromLocalStorage("auth");
       return {
-        ...state,
-        isLoading: false,
-        isAuth: false,
-        user: "",
-        
-        userId: "",
-        
-        isError: false,
+        initialState
       };
     }
     default:

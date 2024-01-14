@@ -2,14 +2,15 @@ import React from "react";
 
 import { Navigate, useLocation } from "react-router-dom";
 
-import { getDataFormLocalStorage } from "./utils/localStorage";
+
+import { useSelector } from "react-redux";
 
 const PrivateRoute = ({ children }) => {
   const location = useLocation();
-  console.log(location);
+  
 
-  //Local Storage
-  const isAuth = getDataFormLocalStorage("auth")?.isAuth || false;
+  
+  const isAuth = useSelector((store) => store.authReducer.isAuth);
 
   if (!isAuth) {
     return (

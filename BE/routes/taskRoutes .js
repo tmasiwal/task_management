@@ -28,8 +28,8 @@ taskRoute.post("/add", authMiddle, async (req, res) => {
 
     // Save the task to the database
     const savedTask = await newTask.save();
-
-    res.status(201).json(savedTask);
+const Task = await task.find({ userId });
+    res.status(201).json(Task);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
