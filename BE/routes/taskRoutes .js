@@ -29,7 +29,7 @@ taskRoute.post("/add", authMiddle, async (req, res) => {
     // Save the task to the database
     const savedTask = await newTask.save();
 const Task = await task.find({ userId });
-    res.status(201).json(Task);
+    res.status(200).json(Task);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
@@ -53,8 +53,8 @@ taskRoute.delete("/:id", authMiddle, async (req, res) => {
 
     // Delete the task
     const deletedTask = await task.findByIdAndDelete(taskId);
-
-    res.status(200).json({ message: "Task deleted successfully", deletedTask });
+const Task = await task.find({ useId: req.body.userId });
+    res.status(200).json(Task);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
@@ -79,12 +79,13 @@ taskRoute.patch("/:id", authMiddle, async (req, res) => {
     }
 
     // Update the task
-    const deletedTask = await task.findByIdAndUpdate(taskId, {
+    const updateTask = await task.findByIdAndUpdate(taskId, {
       title,
       description,
     });
 
-    res.status(200).json({ message: "Task edited successfully", deletedTask });
+   const Task = await task.find({useId:req.body.userId});
+   res.status(200).json(Task);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");

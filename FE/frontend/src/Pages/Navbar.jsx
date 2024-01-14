@@ -16,7 +16,7 @@ const dispatch =useDispatch()
 
   return (
     <div className="h-16 w-full flex items-center justify-between bg-gray-800 p-4 shadow-md">
-      <h1 className="text-white text-lg font-semibold">Logo</h1>
+      <h1 className="text-white text-lg font-semibold">ToDo App</h1>
       {!isAuth && (
         <button className="bg-cyan-500  p-4  rounded-lg tracking-wide font-semibold font-display text-white text-lg font-semiboldfocus:outline-none focus:shadow-outline hover:bg-cyan-600 shadow-lg">
           Login

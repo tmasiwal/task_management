@@ -5,6 +5,7 @@ import PrivateRoute from './PrivateRoute'
 import HomePage from './Pages/HomePage'
 import TaskPage from './Pages/TaskPage'
 import SignupPage from './Pages/SignupPage'
+import SingleTaskPage from'./Pages/SingleTaskPage'
 const Allroutes = () => {
   return (
     <Routes>
@@ -15,6 +16,7 @@ const Allroutes = () => {
       </PrivateRoute>}/>
       <Route path='/task' element={<TaskPage/>}/>
       <Route path='/signup' element={<SignupPage/>}/>
+      <Route path='/task/:id' element={<SingleTaskPage/>}/>
     </Routes>
   )
 }
