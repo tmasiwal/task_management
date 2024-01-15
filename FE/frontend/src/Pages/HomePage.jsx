@@ -14,7 +14,7 @@ const navigate=useNavigate()
     dispatch({type:TASK_REQUEST})
     axios({
       method: "get",
-      url: "http://localhost:8080/tasks/",
+      url: "https://ill-gray-turkey-hat.cyclic.app/tasks/",
       headers: {
         Authorization: `${token}`,
       },

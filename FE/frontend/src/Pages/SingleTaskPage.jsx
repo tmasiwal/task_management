@@ -3,15 +3,34 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { TASK_REQUEST, TASK_SUCCESS } from "../Redux/actionTypes";
-import React , { useState } from "react";
+import React , { useEffect, useState } from "react";
 const SingleTaskPage = () => {
   const { id } = useParams();
    const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [taskData, setTaskData] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 const token = useSelector((store) => store.authReducer.accesstoken);
 
+const getTask=()=>{
+  axios({
+    method: "get",
+    url: `https://ill-gray-turkey-hat.cyclic.app/tasks`,
+    headers: {
+      Authorization: `${token}`,
+      "Content-Type": "application/json",
+    },
+    
+  })
+    .then((res) => {
+      const filteredTask = res.data.Task.filter((task) => task._id === id);
+      if (filteredTask.length > 0) {
+       
+        setTaskData(filteredTask[0]);
+      }})
+    .catch((error) => console.error(error));
+}
 const handleDeleteTask = (e) => {
   e.preventDefault();
 
@@ -21,12 +40,11 @@ const handleDeleteTask = (e) => {
 
   axios({
     method: "DELETE",
-    url: `http://localhost:8080/tasks/${id}`,
+    url: `https://ill-gray-turkey-hat.cyclic.app/tasks/${id}`,
     headers: {
       Authorization: `${token}`,
       "Content-Type": "application/json",
     },
-    
   })
     .then((res) => {
       dispatch({ type: TASK_SUCCESS, payload: res.data.Task });
@@ -46,12 +64,12 @@ const handleDeleteTask = (e) => {
 
     axios({
       method: "PATCH",
-      url: `http://localhost:8080/tasks/${id}`,
+      url: `https://ill-gray-turkey-hat.cyclic.app/tasks/${id}`,
       headers: {
         Authorization: `${token}`,
         "Content-Type": "application/json",
       },
-      data:data
+      data: data,
     })
       .then((res) => {
         dispatch({ type: TASK_SUCCESS, payload: res.data.Task });
@@ -59,7 +77,15 @@ const handleDeleteTask = (e) => {
       })
       .catch((error) => console.error(error));
   };
-
+useEffect(()=>{
+  getTask()
+  
+},[])
+useEffect(() => {
+ setTitle(taskData.title)
+ setDescription(taskData.description)
+}, [taskData]);
+console.log(taskData)
   return (
     <div className="w-1/2  shadow-400 m-auto mt-20 py-10 flex flex-col justify-center items-center">
       <div className="lg:w-1/2 xl:max-w-screen-sm">

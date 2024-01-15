@@ -25,7 +25,7 @@ const handleAddTask = (e) => {
 
   axios({
     method: "POST",
-    url: "http://localhost:8080/tasks/add",
+    url: "https://ill-gray-turkey-hat.cyclic.app/tasks/add",
     headers: {
       Authorization: `${token}`,
       "Content-Type": "application/json",
